@@ -30,7 +30,7 @@ public class Main {
         KTable<String, Long> wordCountsStream = wordCount
                 .mapValues(value -> value.toLowerCase())
                 .flatMapValues(value -> Arrays.asList(value.split(" ")))
-                .selectKey((key, value) -> value)
+                .selectKey((key, value) -> value) // potential repartitioning
                 .groupByKey() // Group the records by key (potential repartitioning)
                 .count(Named.as("Count")); // Perform a count operation on each key (aggregation)
 
